@@ -4,9 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-dynamic-assets": "parcel build src/dynamic-asset-includer.js -d dist/images/",
+    "clean": "rm -rf dist",
+    "start": "parcel src/index.html",
+    "build": "npm run clean && npm run build-dynamic-assets && parcel build src/index.html -d dist/"
   },
   "keywords": [],
   "author": "Gil Fewster <gil@theroyals.com.au> (http://www.advanceparty.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "cssnano": "^4.1.10",
+    "sass": "^1.18.0"
+  }
 }

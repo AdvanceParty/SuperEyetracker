@@ -1,0 +1,52 @@
+$bgCol : rgb(200,255,120);
+$textCol: rgba(0,0,0.0,.75);
+$suits: hearts clubs spades diamonds;
+$ranks: "01" "02" "03" "04" "05" "06" "07" "08" "09" "10" "11" "12" "13";
+$cardBaseWidth: 180px;
+$cardRatio: 1.15;
+
+body {
+  padding:0;
+  margin:0;
+  width: 100vw;
+  height: 100vh;
+  background: $bgCol;
+  color: $textCol;
+}
+
+#table {
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  height: 300px;
+  position: relative;
+  background-color: #333;
+}
+
+.card {
+  display: inline-block;
+  position: relative;
+  margin:15px;
+
+  &::after{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    content: "";
+    background-size: cover;
+    padding-bottom: 136%;
+  }
+  /*
+  Iterate the suits & ranks lists to generate a class 
+  for each card in the deck with {suit}-{rank}.jpg background img
+  Generating the src links at compile time means they get picked up by 
+  parcel and the assets are moved into the dist folder.
+  */
+  @each $suit in $suits {
+    @each $rank in $ranks {
+      &.#{$suit}-#{unquote($rank)}::after {
+        background-image: url('images/cards/#{$suit}_#{unquote($rank)}.jpg');
+      }
+    }
+  }
+}
