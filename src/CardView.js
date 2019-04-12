@@ -23,7 +23,20 @@ class CardView {
   constructor({ cardData, faceUp = true, imagePath = CardView.imagePath }) {
     this._data = cardData.clone();
     this._container = document.createElement(CardView.ContainerType);
+
+    const inner = document.createElement('div');
+    const front = document.createElement('div');
+    const back = document.createElement('div');
+
+    this._container.appendChild(inner);
+    inner.appendChild(front);
+    inner.appendChild(back);
+
     this._container.className = `${CardView.ContainerClassName} ${cardData.suit}-${cardData.rank}`;
+    inner.className = 'inner';
+    front.className = 'front';
+    back.className = 'back';
+
     this._container.onclick = e => this.flip();
 
     // cards are face down by default.

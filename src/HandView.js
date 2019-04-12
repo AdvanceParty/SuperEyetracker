@@ -5,7 +5,7 @@ class HandView {
     this._wrapper = document.createElement('div');
     this._wrapper.className = 'hand';
     this._cardViews = cards.map(cardData => {
-      const view = new CardView({ cardData, faceUp: false });
+      const view = new CardView({ cardData });
       this._wrapper.appendChild(view.element);
       return view;
     });

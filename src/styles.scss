@@ -61,19 +61,56 @@ button {
   padding:20px 0;
 }
 
-.card {
-  margin-right:5px;
+.card, .card .front, .card .back {
   width: var(--card-base-width);
   height: calc(var(--card-base-width)*var(--card-ratio));
-  
+}
+
+.card {
+  margin-right:5px;
+  margin-top: -250px;
+  perspective: 1000px;
+
   &:first-child {
     margin-left: 5px;
   }
 
-  margin-top: -250px;
+  .inner {
+    transition: 0.6s;
+	  transform-style: preserve-3d;
+    position: relative;
+        
+    .front, .back {
+      backface-visibility: hidden;  
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-size: cover;
+    };
 
-  background-image: url('images/cards/back.jpg');
-  background-size: cover;
+    /* front pane, placed above back */
+    .front {
+      z-index: 2;
+      /* for firefox 31 */
+      transform: rotateY(0deg);
+    }
+    
+    /* back, initially hidden pane */
+    .back {
+      transform: rotateY(180deg);
+      background-image: url('images/cards/back.jpg');
+    }
+  }
+  
+  &.faceup .inner {
+    transform: rotateY(180deg);
+  }
+
+    
+  
+
+
+  // background-size: cover;
 
   /*
   Iterate the suits & ranks lists to generate a class 
@@ -83,7 +120,7 @@ button {
   */
   @each $suit in $suits {
     @each $rank in $ranks {
-      &.faceup.#{$suit}-#{unquote($rank)} {
+      &.#{$suit}-#{unquote($rank)} .front {
         background-image: url('images/cards/#{$suit}_#{unquote($rank)}.jpg');
       };
     }

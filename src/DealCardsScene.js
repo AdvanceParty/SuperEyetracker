@@ -18,19 +18,11 @@ class DealCardsScene extends Scene {
 
       await anime({
         targets: '.card',
-        translateY: (el, i) => {
-          console.log(i);
-          this._view.getCardViews()[i].flip();
-          return 250;
-        },
-        delay: anime.stagger(500),
+        translateY: 250,
+        delay: anime.stagger(200),
       }).finished;
 
-      // console.log(this._view.getCardViews());
-      // this._view.getCardViews()[0].setFaceUp(1);
-
-      console.log('NEXT');
-
+      this._view.getCardViews().map(card => card.flip());
       resolve(true);
     });
   }
