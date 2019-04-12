@@ -2,27 +2,50 @@ $bgCol : rgb(200,255,120);
 $textCol: rgba(0,0,0.0,.75);
 $suits: hearts clubs spades diamonds;
 $ranks: "01" "02" "03" "04" "05" "06" "07" "08" "09" "10" "11" "12" "13";
-$cardBaseWidth: 130px;
-$cardRatio: 1.35;
+
+:root {
+  --card-base-width: 120px;
+  --card-ratio: 1.35;
+  --table-height: calc(var(--card-base-width)*2)
+}
+
+@media all and (max-width: 500px) {
+  :root {
+    --card-base-width: 65px;
+  }
+}
+
+@media all and (min-width: 501px) and (max-width: 750px) {
+  :root {
+    --card-base-width: 85px;
+  }
+}
+
+@media all and (min-width: 900px) {
+  :root {
+    --card-base-width: 160px;
+  }
+}
 
 body {
   padding:0;
   margin:0;
-  width: 100%;
   min-height: 100vh;
+  width: 100%;
+  min-width: 350px;
   background: $bgCol;
   color: $textCol;
 }
 
 #table {
-  height: calc(100vw/3.5);
-  // position: relative;
+  height: var(--table-height);
 }
 
 button {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   width: 7em;
   height: 3em;
+  margin-top:10px;
 }
 
 #btn_continue {
@@ -31,31 +54,26 @@ button {
 }
 
 .hand { 
-  padding:0 1%;
-  margin:0 auto;
+  display:flex;
+  justify-content: space-evenly;
+  width: 100%;
+  margin:0 auto 0 auto;
+  padding:20px 0;
 }
 
 .card {
-  display: inline-block;
-  // position: relative;
-  margin:1%;
-  width: $cardBaseWidth;
-  height: $cardBaseWidth * $cardRatio;
+  margin-right:5px;
+  width: var(--card-base-width);
+  height: calc(var(--card-base-width)*var(--card-ratio));
   
   &:first-child {
-    margin-left:10%;
+    margin-left: 5px;
   }
-  
-  // &::after{
-  //   position: absolute;
-  //   top: -150%;
-  //   left: 0;
-  //   width: 100%;
-  //   content: "";
+
+  margin-top: -250px;
+
   background-image: url('images/cards/back.jpg');
   background-size: cover;
-    // padding-bottom: 136%;
-  // }
 
   /*
   Iterate the suits & ranks lists to generate a class 

@@ -19,6 +19,8 @@
     "sass": "^1.18.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.3"
+    "@babel/runtime": "^7.4.3",
+    "animejs": "^3.0.1",
+    "lib": "^4.0.2"
   }
 }

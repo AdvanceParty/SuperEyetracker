@@ -43,6 +43,19 @@ class CardView {
     return this._container.classList.contains(CardView.FaceUpClassName);
   }
 
+  /**
+   * Pass false/0 to make card face down
+   * Or true/1 to make card face up
+   * -> Allows face siide to be set wirh a numeric value
+   * which is useful for targetting with anime library/
+   * @param {bool} bool
+   */
+  setFaceUp(bool) {
+    if (this.isFaceUp != bool) {
+      this.flip();
+    }
+  }
+
   flip() {
     this._container.classList.toggle(CardView.FaceUpClassName);
   }
