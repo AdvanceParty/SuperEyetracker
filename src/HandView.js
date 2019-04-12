@@ -4,8 +4,8 @@ class HandView {
   constructor(cards) {
     this._wrapper = document.createElement('div');
     this._wrapper.className = 'hand';
-    this._cardViews = cards.map(card => {
-      const view = new CardView(card);
+    this._cardViews = cards.map(cardData => {
+      const view = new CardView({ cardData });
       this._wrapper.appendChild(view.element);
       return view;
     });

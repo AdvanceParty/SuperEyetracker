@@ -1,6 +1,17 @@
 const Card = require('./Card');
 
 class CardView {
+  static get FaceUpClassName() {
+    return 'faceup';
+  }
+  static get ContainerClassName() {
+    return 'card';
+  }
+
+  static get ContainerType() {
+    return 'div';
+  }
+
   static set imagePath(path) {
     CardView._imagePath = path;
   }
@@ -8,14 +19,16 @@ class CardView {
   static get imagePath() {
     return CardView._imagePath || 'images/';
   }
-  constructor(cardData, imagePath = CardView.imagePath) {
+
+  constructor({ cardData, faceUp = true, imagePath = CardView.imagePath }) {
     this._data = cardData.clone();
-    const containerEl = document.createElement('div');
-    containerEl.className = `card ${cardData.suit}-${cardData.rank}`;
-    containerEl.onclick = e => {
-      this.flip();
-    };
-    this._container = containerEl;
+    this._container = document.createElement(CardView.ContainerType);
+    this._container.className = `${CardView.ContainerClassName} ${cardData.suit}-${cardData.rank}`;
+    this._container.onclick = e => this.flip();
+
+    // cards are face down by default.
+    // flip it face up if the faceUp option is true
+    if (faceUp) this.flip();
   }
 
   get cardData() {
@@ -26,16 +39,12 @@ class CardView {
     return this._container;
   }
 
-  show() {
-    this._container.classList.add('show');
-  }
-
-  hide() {
-    this._container.classList.remove('show');
+  get isFaceUp() {
+    return this._container.classList.contains(CardView.FaceUpClassName);
   }
 
   flip() {
-    this._container.classList.toggle('flipped');
+    this._container.classList.toggle(CardView.FaceUpClassName);
   }
 }
 

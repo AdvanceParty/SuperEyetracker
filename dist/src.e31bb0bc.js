@@ -218,6 +218,21 @@ var CardView =
 /*#__PURE__*/
 function () {
   _createClass(CardView, null, [{
+    key: "FaceUpClassName",
+    get: function get() {
+      return 'faceup';
+    }
+  }, {
+    key: "ContainerClassName",
+    get: function get() {
+      return 'card';
+    }
+  }, {
+    key: "ContainerType",
+    get: function get() {
+      return 'div';
+    }
+  }, {
     key: "imagePath",
     set: function set(path) {
       CardView._imagePath = path;
@@ -227,38 +242,34 @@ function () {
     }
   }]);
 
-  function CardView(cardData) {
+  function CardView(_ref) {
     var _this = this;
 
-    var imagePath = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : CardView.imagePath;
+    var cardData = _ref.cardData,
+        _ref$faceUp = _ref.faceUp,
+        faceUp = _ref$faceUp === void 0 ? true : _ref$faceUp,
+        _ref$imagePath = _ref.imagePath,
+        imagePath = _ref$imagePath === void 0 ? CardView.imagePath : _ref$imagePath;
 
     _classCallCheck(this, CardView);
 
     this._data = cardData.clone();
-    var containerEl = document.createElement('div');
-    containerEl.className = "card ".concat(cardData.suit, "-").concat(cardData.rank);
+    this._container = document.createElement(CardView.ContainerType);
+    this._container.className = "".concat(CardView.ContainerClassName, " ").concat(cardData.suit, "-").concat(cardData.rank);
 
-    containerEl.onclick = function (e) {
-      _this.flip();
-    };
+    this._container.onclick = function (e) {
+      return _this.flip();
+    }; // cards are face down by default.
+    // flip it face up if the faceUp option is true
 
-    this._container = containerEl;
+
+    if (faceUp) this.flip();
   }
 
   _createClass(CardView, [{
-    key: "show",
-    value: function show() {
-      this._container.classList.add('show');
-    }
-  }, {
-    key: "hide",
-    value: function hide() {
-      this._container.classList.remove('show');
-    }
-  }, {
     key: "flip",
     value: function flip() {
-      this._container.classList.toggle('flipped');
+      this._container.classList.toggle(CardView.FaceUpClassName);
     }
   }, {
     key: "cardData",
@@ -269,6 +280,11 @@ function () {
     key: "element",
     get: function get() {
       return this._container;
+    }
+  }, {
+    key: "isFaceUp",
+    get: function get() {
+      return this._container.classList.contains(CardView.FaceUpClassName);
     }
   }]);
 
@@ -295,8 +311,10 @@ function () {
 
     this._wrapper = document.createElement('div');
     this._wrapper.className = 'hand';
-    this._cardViews = cards.map(function (card) {
-      var view = new CardView(card);
+    this._cardViews = cards.map(function (cardData) {
+      var view = new CardView({
+        cardData: cardData
+      });
 
       _this._wrapper.appendChild(view.element);
 

@@ -1,15 +1,14 @@
 body {
   padding: 0;
   margin: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   background: #c8ff78;
   color: rgba(0, 0, 0, 0.75);
 }
 
 #table {
   height: calc(100vw/3.5);
-  position: relative;
 }
 
 button {
@@ -24,16 +23,17 @@ button {
 }
 
 .hand {
-  min-width: 300px;
   padding: 0 1%;
   margin: 0 auto;
 }
 
 .card {
   display: inline-block;
-  position: relative;
   margin: 1%;
-  width: 15%;
+  width: 130px;
+  height: 175.5px;
+  background-image: url("/back.bc7df221.jpg");
+  background-size: cover;
   /*
   Iterate the suits & ranks lists to generate a class 
   for each card in the deck with {suit}-{rank}.jpg background img
@@ -44,326 +44,161 @@ button {
 .card:first-child {
   margin-left: 10%;
 }
-.card::after {
-  position: absolute;
-  top: -150%;
-  left: 0;
-  width: 100%;
-  content: "";
-  background-size: cover;
-  padding-bottom: 136%;
-}
-.card.hearts-01::after {
+.card.faceup.hearts-01 {
   background-image: url("/hearts_01.3ac9621d.jpg");
 }
-.card.flipped.hearts-01::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.hearts-02::after {
+.card.faceup.hearts-02 {
   background-image: url("/hearts_02.533958c1.jpg");
 }
-.card.flipped.hearts-02::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.hearts-03::after {
+.card.faceup.hearts-03 {
   background-image: url("/hearts_03.6a1c3f07.jpg");
 }
-.card.flipped.hearts-03::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.hearts-04::after {
+.card.faceup.hearts-04 {
   background-image: url("/hearts_04.6e818773.jpg");
 }
-.card.flipped.hearts-04::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.hearts-05::after {
+.card.faceup.hearts-05 {
   background-image: url("/hearts_05.d9f263c7.jpg");
 }
-.card.flipped.hearts-05::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.hearts-06::after {
+.card.faceup.hearts-06 {
   background-image: url("/hearts_06.321ff50a.jpg");
 }
-.card.flipped.hearts-06::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.hearts-07::after {
+.card.faceup.hearts-07 {
   background-image: url("/hearts_07.4ec3e555.jpg");
 }
-.card.flipped.hearts-07::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.hearts-08::after {
+.card.faceup.hearts-08 {
   background-image: url("/hearts_08.91e5f553.jpg");
 }
-.card.flipped.hearts-08::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.hearts-09::after {
+.card.faceup.hearts-09 {
   background-image: url("/hearts_09.9ca249fc.jpg");
 }
-.card.flipped.hearts-09::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.hearts-10::after {
+.card.faceup.hearts-10 {
   background-image: url("/hearts_10.58420ae4.jpg");
 }
-.card.flipped.hearts-10::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.hearts-11::after {
+.card.faceup.hearts-11 {
   background-image: url("/hearts_11.af5713b1.jpg");
 }
-.card.flipped.hearts-11::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.hearts-12::after {
+.card.faceup.hearts-12 {
   background-image: url("/hearts_12.31949ced.jpg");
 }
-.card.flipped.hearts-12::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.hearts-13::after {
+.card.faceup.hearts-13 {
   background-image: url("/hearts_13.9963e2f4.jpg");
 }
-.card.flipped.hearts-13::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.clubs-01::after {
+.card.faceup.clubs-01 {
   background-image: url("/clubs_01.50c3197a.jpg");
 }
-.card.flipped.clubs-01::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.clubs-02::after {
+.card.faceup.clubs-02 {
   background-image: url("/clubs_02.3f09c7bc.jpg");
 }
-.card.flipped.clubs-02::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.clubs-03::after {
+.card.faceup.clubs-03 {
   background-image: url("/clubs_03.e5cfebe9.jpg");
 }
-.card.flipped.clubs-03::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.clubs-04::after {
+.card.faceup.clubs-04 {
   background-image: url("/clubs_04.767ff2fc.jpg");
 }
-.card.flipped.clubs-04::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.clubs-05::after {
+.card.faceup.clubs-05 {
   background-image: url("/clubs_05.d0327b5c.jpg");
 }
-.card.flipped.clubs-05::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.clubs-06::after {
+.card.faceup.clubs-06 {
   background-image: url("/clubs_06.71404abb.jpg");
 }
-.card.flipped.clubs-06::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.clubs-07::after {
+.card.faceup.clubs-07 {
   background-image: url("/clubs_07.349bbc31.jpg");
 }
-.card.flipped.clubs-07::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.clubs-08::after {
+.card.faceup.clubs-08 {
   background-image: url("/clubs_08.7c9a2d32.jpg");
 }
-.card.flipped.clubs-08::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.clubs-09::after {
+.card.faceup.clubs-09 {
   background-image: url("/clubs_09.119f0b9a.jpg");
 }
-.card.flipped.clubs-09::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.clubs-10::after {
+.card.faceup.clubs-10 {
   background-image: url("/clubs_10.f64e1662.jpg");
 }
-.card.flipped.clubs-10::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.clubs-11::after {
+.card.faceup.clubs-11 {
   background-image: url("/clubs_11.54c004db.jpg");
 }
-.card.flipped.clubs-11::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.clubs-12::after {
+.card.faceup.clubs-12 {
   background-image: url("/clubs_12.50ea9da1.jpg");
 }
-.card.flipped.clubs-12::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.clubs-13::after {
+.card.faceup.clubs-13 {
   background-image: url("/clubs_13.a675f595.jpg");
 }
-.card.flipped.clubs-13::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.spades-01::after {
+.card.faceup.spades-01 {
   background-image: url("/spades_01.dabae6d2.jpg");
 }
-.card.flipped.spades-01::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.spades-02::after {
+.card.faceup.spades-02 {
   background-image: url("/spades_02.e74fb092.jpg");
 }
-.card.flipped.spades-02::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.spades-03::after {
+.card.faceup.spades-03 {
   background-image: url("/spades_03.6aa2c084.jpg");
 }
-.card.flipped.spades-03::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.spades-04::after {
+.card.faceup.spades-04 {
   background-image: url("/spades_04.372788ab.jpg");
 }
-.card.flipped.spades-04::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.spades-05::after {
+.card.faceup.spades-05 {
   background-image: url("/spades_05.f7b20069.jpg");
 }
-.card.flipped.spades-05::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.spades-06::after {
+.card.faceup.spades-06 {
   background-image: url("/spades_06.9f271c5a.jpg");
 }
-.card.flipped.spades-06::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.spades-07::after {
+.card.faceup.spades-07 {
   background-image: url("/spades_07.09c7c79a.jpg");
 }
-.card.flipped.spades-07::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.spades-08::after {
+.card.faceup.spades-08 {
   background-image: url("/spades_08.be1ecf14.jpg");
 }
-.card.flipped.spades-08::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.spades-09::after {
+.card.faceup.spades-09 {
   background-image: url("/spades_09.ff81cfdb.jpg");
 }
-.card.flipped.spades-09::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.spades-10::after {
+.card.faceup.spades-10 {
   background-image: url("/spades_10.8b1babd9.jpg");
 }
-.card.flipped.spades-10::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.spades-11::after {
+.card.faceup.spades-11 {
   background-image: url("/spades_11.07139fc6.jpg");
 }
-.card.flipped.spades-11::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.spades-12::after {
+.card.faceup.spades-12 {
   background-image: url("/spades_12.e54d7b65.jpg");
 }
-.card.flipped.spades-12::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.spades-13::after {
+.card.faceup.spades-13 {
   background-image: url("/spades_13.9579786c.jpg");
 }
-.card.flipped.spades-13::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.diamonds-01::after {
+.card.faceup.diamonds-01 {
   background-image: url("/diamonds_01.be44de52.jpg");
 }
-.card.flipped.diamonds-01::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.diamonds-02::after {
+.card.faceup.diamonds-02 {
   background-image: url("/diamonds_02.1de3c7c7.jpg");
 }
-.card.flipped.diamonds-02::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.diamonds-03::after {
+.card.faceup.diamonds-03 {
   background-image: url("/diamonds_03.f29fbbb2.jpg");
 }
-.card.flipped.diamonds-03::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.diamonds-04::after {
+.card.faceup.diamonds-04 {
   background-image: url("/diamonds_04.3d727c4a.jpg");
 }
-.card.flipped.diamonds-04::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.diamonds-05::after {
+.card.faceup.diamonds-05 {
   background-image: url("/diamonds_05.f9fcef40.jpg");
 }
-.card.flipped.diamonds-05::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.diamonds-06::after {
+.card.faceup.diamonds-06 {
   background-image: url("/diamonds_06.425eb134.jpg");
 }
-.card.flipped.diamonds-06::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.diamonds-07::after {
+.card.faceup.diamonds-07 {
   background-image: url("/diamonds_07.bc8d26d4.jpg");
 }
-.card.flipped.diamonds-07::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.diamonds-08::after {
+.card.faceup.diamonds-08 {
   background-image: url("/diamonds_08.90d1b186.jpg");
 }
-.card.flipped.diamonds-08::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.diamonds-09::after {
+.card.faceup.diamonds-09 {
   background-image: url("/diamonds_09.29b01050.jpg");
 }
-.card.flipped.diamonds-09::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.diamonds-10::after {
+.card.faceup.diamonds-10 {
   background-image: url("/diamonds_10.c7aa390b.jpg");
 }
-.card.flipped.diamonds-10::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.diamonds-11::after {
+.card.faceup.diamonds-11 {
   background-image: url("/diamonds_11.590fc4b0.jpg");
 }
-.card.flipped.diamonds-11::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.diamonds-12::after {
+.card.faceup.diamonds-12 {
   background-image: url("/diamonds_12.2d1e4666.jpg");
 }
-.card.flipped.diamonds-12::after {
-  background-image: url("/back.bc7df221.jpg");
-}
-.card.diamonds-13::after {
+.card.faceup.diamonds-13 {
   background-image: url("/diamonds_13.77099944.jpg");
-}
-.card.flipped.diamonds-13::after {
-  background-image: url("/back.bc7df221.jpg");
 }
 
 /*# sourceMappingURL=/styles.164d45a1.css.map */
