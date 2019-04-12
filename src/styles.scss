@@ -15,27 +15,48 @@ body {
 }
 
 #table {
-  display:grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  height: 300px;
+  height: calc(100vw/3.5);
   position: relative;
-  background-color: #333;
+}
+
+button {
+  font-size: 1.2rem;
+  width: 7em;
+  height: 3em;
+}
+
+#btn_continue {
+  display:block;
+  margin:auto auto;
+}
+
+.hand {
+  min-width: 300px;
+  // width:80%; 
+  padding:0 1%;
+  margin:0 auto;
 }
 
 .card {
   display: inline-block;
   position: relative;
-  margin:15px;
-
+  margin:1%;
+  width: 15%;
+  
+  &:first-child {
+    margin-left:10%;
+  }
+  
   &::after{
     position: absolute;
-    top: 0;
+    top: -150%;
     left: 0;
     width: 100%;
     content: "";
     background-size: cover;
     padding-bottom: 136%;
   }
+
   /*
   Iterate the suits & ranks lists to generate a class 
   for each card in the deck with {suit}-{rank}.jpg background img
@@ -46,6 +67,10 @@ body {
     @each $rank in $ranks {
       &.#{$suit}-#{unquote($rank)}::after {
         background-image: url('images/cards/#{$suit}_#{unquote($rank)}.jpg');
+      }
+
+      &.flipped.#{$suit}-#{unquote($rank)}::after{
+        background-image: url('images/cards/back.jpg')
       }
     }
   }

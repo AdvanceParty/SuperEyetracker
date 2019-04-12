@@ -12,6 +12,9 @@ class CardView {
     this._data = cardData.clone();
     const containerEl = document.createElement('div');
     containerEl.className = `card ${cardData.suit}-${cardData.rank}`;
+    containerEl.onclick = e => {
+      this.flip();
+    };
     this._container = containerEl;
   }
 
@@ -21,6 +24,18 @@ class CardView {
 
   get element() {
     return this._container;
+  }
+
+  show() {
+    this._container.classList.add('show');
+  }
+
+  hide() {
+    this._container.classList.remove('show');
+  }
+
+  flip() {
+    this._container.classList.toggle('flipped');
   }
 }
 

@@ -1,11 +1,15 @@
 const { SUIT, FACE, Card } = require('./Card');
-
+const { fyShuffle } = require('./utils');
 class Deck {
-  constructor() {
+  constructor(cards = false) {
     this._undrawn = [];
     this._drawn = [];
     this._size = 0;
     this._remaining = 0;
+
+    if (cards) {
+      this.add(cards);
+    }
   }
 
   /**
@@ -41,8 +45,12 @@ class Deck {
    * Moves all cards in from _drawn array into the _undrawn array
    */
   rebuild() {
-    this._undrawn = [...this._undrawn, ...this._drawn];
-    this.drawn = [];
+    // iterate and unshift to preserve original order of deck
+    // (assuming deck has not been shuffled since first card was drawn)
+    this._drawn.map(card => {
+      this._undrawn.unshift(card);
+    });
+    this._drawn.length = 0;
   }
 
   /**
@@ -66,7 +74,7 @@ class Deck {
     return card.clone();
   }
 
-  dealHand(count) {
+  drawCards(count) {
     if (count > this.undrawn) {
       throw Error(`Can't deal ${count} cards. Only ${this.undrawn} cards are left in the deck!`);
     }
@@ -78,19 +86,6 @@ class Deck {
     }
     return hand;
   }
-}
-
-/**
- * Fisher-Yates Shuffle algorithm
- * Return a new array -- the original is not altered
- */
-function fyShuffle(array) {
-  const shuffled = array.map(item => item);
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; // swap elements
-  }
-  return shuffled;
 }
 
 module.exports = Deck;

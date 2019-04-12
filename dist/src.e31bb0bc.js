@@ -205,15 +205,216 @@ function () {
 module.exports.RANK = RANK;
 module.exports.SUIT = SUIT;
 module.exports.Card = Card;
+},{}],"CardView.js":[function(require,module,exports) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Card = require('./Card');
+
+var CardView =
+/*#__PURE__*/
+function () {
+  _createClass(CardView, null, [{
+    key: "imagePath",
+    set: function set(path) {
+      CardView._imagePath = path;
+    },
+    get: function get() {
+      return CardView._imagePath || 'images/';
+    }
+  }]);
+
+  function CardView(cardData) {
+    var _this = this;
+
+    var imagePath = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : CardView.imagePath;
+
+    _classCallCheck(this, CardView);
+
+    this._data = cardData.clone();
+    var containerEl = document.createElement('div');
+    containerEl.className = "card ".concat(cardData.suit, "-").concat(cardData.rank);
+
+    containerEl.onclick = function (e) {
+      _this.flip();
+    };
+
+    this._container = containerEl;
+  }
+
+  _createClass(CardView, [{
+    key: "show",
+    value: function show() {
+      this._container.classList.add('show');
+    }
+  }, {
+    key: "hide",
+    value: function hide() {
+      this._container.classList.remove('show');
+    }
+  }, {
+    key: "flip",
+    value: function flip() {
+      this._container.classList.toggle('flipped');
+    }
+  }, {
+    key: "cardData",
+    get: function get() {
+      return this._data.clone();
+    }
+  }, {
+    key: "element",
+    get: function get() {
+      return this._container;
+    }
+  }]);
+
+  return CardView;
+}();
+
+module.exports = CardView;
+},{"./Card":"Card.js"}],"HandView.js":[function(require,module,exports) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var CardView = require('./CardView');
+
+var HandView =
+/*#__PURE__*/
+function () {
+  function HandView(cards) {
+    var _this = this;
+
+    _classCallCheck(this, HandView);
+
+    this._wrapper = document.createElement('div');
+    this._wrapper.className = 'hand';
+    this._cardViews = cards.map(function (card) {
+      var view = new CardView(card);
+
+      _this._wrapper.appendChild(view.element);
+
+      return view;
+    });
+  }
+
+  _createClass(HandView, [{
+    key: "attach",
+    value: function attach(parentElement) {
+      // clear out current elements if already attach to a parent,
+      if (this._parentElement) {
+        this.destroy();
+      }
+
+      this._parentElement = parentElement;
+      parentElement.appendChild(this._wrapper);
+    }
+  }, {
+    key: "getCardViews",
+    value: function getCardViews() {
+      return this._cardViews;
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      // remove the wrapper element (and the child cards) from the dom
+      this._parentElement.removeChild(this._wrapper);
+
+      this._parentElement = null;
+      return null;
+    }
+  }]);
+
+  return HandView;
+}();
+
+module.exports = HandView;
+},{"./CardView":"CardView.js"}],"Sequencer.js":[function(require,module,exports) {
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var position = -1;
+var items = [];
+
+var Sequencer =
+/*#__PURE__*/
+function () {
+  function Sequencer() {
+    _classCallCheck(this, Sequencer);
+  }
+
+  _createClass(Sequencer, [{
+    key: "addItem",
+    value: function addItem(func) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      if (!func instanceof Function) {
+        throw Error("Sequencer.addItem requires a Function. Can't add ".concat(_typeof(func), "."));
+      } else {
+        items.push({
+          func: func,
+          args: args
+        });
+      }
+    }
+  }, {
+    key: "callNext",
+    value: function callNext() {
+      if (items.length == 0) {
+        throw Error("You need to add items to the Sequencer before you can callNext");
+      }
+
+      if (++position >= items.length) {
+        position = 0;
+      }
+
+      var _items$position = items[position],
+          func = _items$position.func,
+          args = _items$position.args;
+      func(args);
+    }
+  }]);
+
+  return Sequencer;
+}();
+
+module.exports = Sequencer;
+},{}],"utils.js":[function(require,module,exports) {
+/**
+ * Fisher-Yates Shuffle algorithm
+ * Return a new array -- the original is not altered
+ */
+var fyShuffle = function fyShuffle(array) {
+  var shuffled = array.map(function (item) {
+    return item;
+  });
+
+  for (var i = shuffled.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+
+    var _ref = [shuffled[j], shuffled[i]];
+    shuffled[i] = _ref[0];
+    shuffled[j] = _ref[1];
+  }
+
+  return shuffled;
+};
+
+module.exports.fyShuffle = fyShuffle;
 },{}],"Deck.js":[function(require,module,exports) {
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -225,16 +426,25 @@ var _require = require('./Card'),
     FACE = _require.FACE,
     Card = _require.Card;
 
+var _require2 = require('./utils'),
+    fyShuffle = _require2.fyShuffle;
+
 var Deck =
 /*#__PURE__*/
 function () {
   function Deck() {
+    var cards = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
     _classCallCheck(this, Deck);
 
     this._undrawn = [];
     this._drawn = [];
     this._size = 0;
     this._remaining = 0;
+
+    if (cards) {
+      this.add(cards);
+    }
   }
   /**
    * Adds one more Card instances to the deck
@@ -278,8 +488,15 @@ function () {
   }, {
     key: "rebuild",
     value: function rebuild() {
-      this._undrawn = [].concat(_toConsumableArray(this._undrawn), _toConsumableArray(this._drawn));
-      this.drawn = [];
+      var _this2 = this;
+
+      // iterate and unshift to preserve original order of deck
+      // (assuming deck has not been shuffled since first card was drawn)
+      this._drawn.map(function (card) {
+        _this2._undrawn.unshift(card);
+      });
+
+      this._drawn.length = 0;
     }
     /**
      * Returns the total number of cards in the deck.
@@ -296,8 +513,8 @@ function () {
       return card.clone();
     }
   }, {
-    key: "dealHand",
-    value: function dealHand(count) {
+    key: "drawCards",
+    value: function drawCards(count) {
       if (count > this.undrawn) {
         throw Error("Can't deal ".concat(count, " cards. Only ").concat(this.undrawn, " cards are left in the deck!"));
       }
@@ -329,81 +546,9 @@ function () {
 
   return Deck;
 }();
-/**
- * Fisher-Yates Shuffle algorithm
- * Return a new array -- the original is not altered
- */
-
-
-function fyShuffle(array) {
-  var shuffled = array.map(function (item) {
-    return item;
-  });
-
-  for (var i = shuffled.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
-
-    var _ref = [shuffled[j], shuffled[i]];
-    shuffled[i] = _ref[0];
-    shuffled[j] = _ref[1];
-  }
-
-  return shuffled;
-}
 
 module.exports = Deck;
-},{"./Card":"Card.js"}],"CardView.js":[function(require,module,exports) {
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var Card = require('./Card');
-
-var CardView =
-/*#__PURE__*/
-function () {
-  _createClass(CardView, null, [{
-    key: "imagePath",
-    set: function set(path) {
-      CardView._imagePath = path;
-    },
-    get: function get() {
-      return CardView._imagePath || 'images/';
-    }
-  }]);
-
-  function CardView(cardData) {
-    var imagePath = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : CardView.imagePath;
-
-    _classCallCheck(this, CardView);
-
-    this._data = cardData.clone();
-    var containerEl = document.createElement('div');
-    containerEl.className = "card ".concat(cardData.suit, "-").concat(cardData.rank);
-    this._container = containerEl;
-  }
-
-  _createClass(CardView, [{
-    key: "cardData",
-    get: function get() {
-      return this._data.clone();
-    }
-  }, {
-    key: "element",
-    get: function get() {
-      return this._container;
-    }
-  }]);
-
-  return CardView;
-}();
-
-module.exports = CardView;
-},{"./Card":"Card.js"}],"images/*.*":[function(require,module,exports) {
-module.exports = {};
-},{}],"index.js":[function(require,module,exports) {
+},{"./Card":"Card.js","./utils":"utils.js"}],"decks.js":[function(require,module,exports) {
 var _require = require('./Card'),
     Card = _require.Card,
     SUIT = _require.SUIT,
@@ -411,31 +556,76 @@ var _require = require('./Card'),
 
 var Deck = require('./Deck');
 
+var blackDeck = new Deck([new Card(SUIT.CLUBS, RANK.JACK), new Card(SUIT.SPADES, RANK.JACK), new Card(SUIT.CLUBS, RANK.QUEEN), new Card(SUIT.SPADES, RANK.QUEEN), new Card(SUIT.CLUBS, RANK.KING), new Card(SUIT.SPADES, RANK.KING), new Card(SUIT.CLUBS, RANK.ACE), new Card(SUIT.SPADES, RANK.ACE)]);
+var redDeck = new Deck([new Card(SUIT.HEARTS, RANK.JACK), new Card(SUIT.DIAMONDS, RANK.JACK), new Card(SUIT.HEARTS, RANK.QUEEN), new Card(SUIT.DIAMONDS, RANK.QUEEN), new Card(SUIT.HEARTS, RANK.KING), new Card(SUIT.DIAMONDS, RANK.KING), new Card(SUIT.HEARTS, RANK.ACE), new Card(SUIT.DIAMONDS, RANK.ACE)]);
+var deck = new Deck([new Card(SUIT.CLUBS, RANK.JACK), new Card(SUIT.SPADES, RANK.KING), new Card(SUIT.DIAMONDS, RANK.ACE), new Card(SUIT.SPADES, RANK.JACK), new Card(SUIT.HEARTS, RANK.QUEEN), new Card(SUIT.SPADES, RANK.JACK), new Card(SUIT.HEARTS, RANK.ACE), new Card(SUIT.CLUBS, RANK.KING), new Card(SUIT.DIAMONDS, RANK.QUEEN)]);
+module.exports.deck = deck;
+module.exports.blackDeck = blackDeck;
+module.exports.redDeck = redDeck;
+},{"./Card":"Card.js","./Deck":"Deck.js"}],"index.js":[function(require,module,exports) {
 var CardView = require('./CardView');
 
-var images = require('./images/*.*');
+var HandView = require('./HandView');
 
-var deck = new Deck();
+var Sequencer = require('./Sequencer');
+
 var table = document.querySelector('#table');
-deck.add([new Card(SUIT.CLUBS, RANK.JACK), new Card(SUIT.HEARTS, RANK.JACK), new Card(SUIT.SPADES, RANK.JACK), new Card(SUIT.DIAMONDS, RANK.JACK), new Card(SUIT.CLUBS, RANK.QUEEN), new Card(SUIT.HEARTS, RANK.QUEEN), new Card(SUIT.SPADES, RANK.QUEEN), new Card(SUIT.DIAMONDS, RANK.QUEEN), new Card(SUIT.CLUBS, RANK.KING), new Card(SUIT.HEARTS, RANK.KING), new Card(SUIT.SPADES, RANK.KING), new Card(SUIT.DIAMONDS, RANK.KING), new Card(SUIT.CLUBS, RANK.ACE), new Card(SUIT.HEARTS, RANK.ACE), new Card(SUIT.SPADES, RANK.ACE), new Card(SUIT.DIAMONDS, RANK.ACE)]);
+var continueBtn = document.querySelector('#btn_continue');
+var sequence = new Sequencer();
 
-var init = function init() {
-  deck.shuffle();
-  dealRoundOne();
+var _require = require('./decks'),
+    deck = _require.deck;
+
+var currentHandView;
+
+var intro = function intro() {
+  var title = document.createElement('h1');
+  title.innerText = 'Card Preference Prediction Algorithm';
+  table.appendChild(title);
+  deck.rebuild();
 };
 
-var dealRoundOne = function dealRoundOne() {
-  var hand = deck.dealHand(5);
-  var cardViews = hand.map(function (card) {
-    var cView = new CardView(card);
-    table.appendChild(cView.element);
-    return cView;
-  });
-  console.log(cardViews);
+var clearTable = function clearTable() {
+  // if (currentHandView) {
+  //   currentHandView = currentHandView.destroy();
+  // }
+  while (table.firstChild) {
+    table.removeChild(table.firstChild);
+  }
+};
+
+var dealCards = function dealCards(count) {
+  return displayCards(deck.drawCards(count), table);
+};
+/**
+ * Takes an array of Cards
+ * and adds HTML elements to the table node in the don
+ * @param {Array:Card} cards
+ */
+
+
+var displayCards = function displayCards(cards, container) {
+  currentHandView = new HandView(cards);
+  currentHandView.attach(table);
+  var cardViews = currentHandView.getCardViews();
+  return currentHandView;
+};
+
+var init = function init() {
+  sequence.addItem(intro);
+  sequence.addItem(clearTable);
+  sequence.addItem(dealCards, 5);
+  sequence.addItem(clearTable);
+  sequence.addItem(dealCards, 4);
+  sequence.addItem(clearTable); // temporary trigger to move from one step to the next
+
+  continueBtn.onclick = function (e) {
+    sequence.callNext();
+  };
 };
 
 init();
-},{"./Card":"Card.js","./Deck":"Deck.js","./CardView":"CardView.js","./images/*.*":"images/*.*"}],"../../../../.nvs/node/10.14.2/x64/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./CardView":"CardView.js","./HandView":"HandView.js","./Sequencer":"Sequencer.js","./decks":"decks.js"}],"../../../../.nvs/node/10.14.2/x64/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -463,7 +653,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63128" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58608" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

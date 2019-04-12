@@ -1,43 +1,60 @@
-const { Card, SUIT, RANK } = require('./Card');
-const Deck = require('./Deck');
 const CardView = require('./CardView');
-const images = require('./images/*.*');
+const HandView = require('./HandView');
+const Sequencer = require('./Sequencer');
 
-const deck = new Deck();
 const table = document.querySelector('#table');
+const continueBtn = document.querySelector('#btn_continue');
+const sequence = new Sequencer();
+const { deck } = require('./decks');
+let currentHandView;
 
-deck.add([
-  new Card(SUIT.CLUBS, RANK.JACK),
-  new Card(SUIT.HEARTS, RANK.JACK),
-  new Card(SUIT.SPADES, RANK.JACK),
-  new Card(SUIT.DIAMONDS, RANK.JACK),
-  new Card(SUIT.CLUBS, RANK.QUEEN),
-  new Card(SUIT.HEARTS, RANK.QUEEN),
-  new Card(SUIT.SPADES, RANK.QUEEN),
-  new Card(SUIT.DIAMONDS, RANK.QUEEN),
-  new Card(SUIT.CLUBS, RANK.KING),
-  new Card(SUIT.HEARTS, RANK.KING),
-  new Card(SUIT.SPADES, RANK.KING),
-  new Card(SUIT.DIAMONDS, RANK.KING),
-  new Card(SUIT.CLUBS, RANK.ACE),
-  new Card(SUIT.HEARTS, RANK.ACE),
-  new Card(SUIT.SPADES, RANK.ACE),
-  new Card(SUIT.DIAMONDS, RANK.ACE),
-]);
-
-const init = () => {
-  deck.shuffle();
-  dealRoundOne();
+const intro = () => {
+  const title = document.createElement('h1');
+  title.innerText = 'Card Preference Prediction Algorithm';
+  table.appendChild(title);
+  deck.rebuild();
 };
 
-const dealRoundOne = () => {
-  const hand = deck.dealHand(5);
-  const cardViews = hand.map(card => {
-    const cView = new CardView(card);
-    table.appendChild(cView.element);
-    return cView;
-  });
-  console.log(cardViews);
+const clearTable = () => {
+  // if (currentHandView) {
+  //   currentHandView = currentHandView.destroy();
+  // }
+
+  while (table.firstChild) {
+    table.removeChild(table.firstChild);
+  }
+};
+
+const dealCards = count => {
+  return displayCards(deck.drawCards(count), table);
+};
+
+/**
+ * Takes an array of Cards
+ * and adds HTML elements to the table node in the don
+ * @param {Array:Card} cards
+ */
+const displayCards = (cards, container) => {
+  currentHandView = new HandView(cards);
+  currentHandView.attach(table);
+
+  const cardViews = currentHandView.getCardViews();
+
+  return currentHandView;
+};
+
+const init = () => {
+  sequence.addItem(intro);
+  sequence.addItem(clearTable);
+  sequence.addItem(dealCards, 5);
+  sequence.addItem(clearTable);
+  sequence.addItem(dealCards, 4);
+  sequence.addItem(clearTable);
+
+  // temporary trigger to move from one step to the next
+  continueBtn.onclick = e => {
+    sequence.callNext();
+  };
 };
 
 init();
