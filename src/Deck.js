@@ -19,7 +19,7 @@ class Deck {
   add(card) {
     // if a single item was supplied, wrap it into an array
     // so we can treat everything the same;
-    newCards = card instanceof Array ? card : new Array(card);
+    const newCards = card instanceof Array ? card : new Array(card);
 
     newCards.map(item => {
       if (item instanceof Card) {
