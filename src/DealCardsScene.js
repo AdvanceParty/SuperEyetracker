@@ -14,63 +14,60 @@ class DealCardsScene extends Scene {
     this._handTwoView = new HandView(handTwo, false);
 
     this._msgBox = document.createElement('p');
-    this._msgBox.classList.add("msgBox");
+    this._msgBox.classList.add('msgBox');
     this._container.appendChild(this._msgBox);
-    this.clearMsg()
-
+    this.clearMsg();
   }
 
-
-  displayMsg (msg) {
+  displayMsg(msg) {
     this._msgBox.innerText = msg;
     this._msgBox.classList.remove('hide');
   }
-  
-  clearMsg () {
+
+  clearMsg() {
     this._msgBox.classList.add('hide');
   }
 
-  onBuildComplete () {
+  onBuildComplete() {
     const btn = document.createElement('button');
-    btn.innerText = "Next";
+    btn.innerText = 'Next';
     btn.className = 'btn_continue';
     btn.onclick = e => this.continue();
     this._container.appendChild(btn);
   }
 
   async build() {
-    
     await this.pause(500);
-    
-    this.displayMsg('Shuffling the deck.')
+
+    this.displayMsg('Shuffling the deck.');
     await this.pause(3000);
-    
-    this.clearMsg()
+
+    this.clearMsg();
     await this.pause(1000);
-    this.displayMsg('Pick a card & focus your gaze on it.')
+    this.displayMsg('Pick a card & focus your gaze on it.');
     await this.pause(4000);
     this._handOneView.attach(this._container);
     await this.dealFive();
+    await this.pause(1000);
     this.flipCards(this._handOneView);
     await this.pause(3000);
-    
+
     this.flipCards(this._handOneView);
-    this.clearMsg()
+    this.clearMsg();
     await this.pause(600);
-    
-    this.displayMsg(`Throwing away your card!`)
+
+    this.displayMsg(`Throwing away your card!`);
     await this.mixUp();
-    
+
     // swap in the new hand
     this._handOneView.destroy();
     this._handTwoView.attach(this._container);
     await this.dealFour();
     this.flipCards(this._handTwoView);
-    this.clearMsg()
-    
-    
+    this.clearMsg();
+
     await this.pause(800);
-    this.displayMsg(`Check it out: your card is gone!`)
+    this.displayMsg(`Check it out: your card is gone!`);
     return this.pause(600);
   }
 
