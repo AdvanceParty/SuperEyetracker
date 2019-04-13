@@ -2,7 +2,7 @@ const Card = require('./Card');
 
 class CardView {
   static get FaceUpClassName() {
-    return 'faceup';
+    return 'faceUp';
   }
   static get ContainerClassName() {
     return 'card';
@@ -41,7 +41,7 @@ class CardView {
 
     // cards are face down by default.
     // flip it face up if the faceUp option is true
-    if (faceUp) this.flip();
+    if (this.isFaceUp) this.flip();
   }
 
   get cardData() {

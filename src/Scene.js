@@ -1,6 +1,7 @@
 class Scene {
   constructor(container, options) {
     this._container = container;
+    this._options = options;
     this.configure(options);
     this.startBuild();
   }
@@ -52,6 +53,15 @@ class Scene {
       }
       resolve(true);
     });
+  }
+
+  triggerNextScene() {
+    this._options.sequencer.nextScene();
+  }
+
+  continue() {
+    this.exit();
+    this.triggerNextScene();
   }
 }
 

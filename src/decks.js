@@ -24,15 +24,15 @@ const redDeck = new Deck([
 ]);
 
 const deck = new Deck([
-  new Card(SUIT.CLUBS, RANK.JACK),
-  new Card(SUIT.SPADES, RANK.KING),
-  new Card(SUIT.DIAMONDS, RANK.ACE),
-  new Card(SUIT.SPADES, RANK.JACK),
-  new Card(SUIT.HEARTS, RANK.QUEEN),
-  new Card(SUIT.SPADES, RANK.JACK),
+  new Card(SUIT.CLUBS, RANK.ACE),
   new Card(SUIT.HEARTS, RANK.ACE),
   new Card(SUIT.CLUBS, RANK.KING),
+  new Card(SUIT.DIAMONDS, RANK.KING),
   new Card(SUIT.DIAMONDS, RANK.QUEEN),
+  new Card(SUIT.SPADES, RANK.ACE),
+  new Card(SUIT.HEARTS, RANK.KING),
+  new Card(SUIT.SPADES, RANK.KING),
+  new Card(SUIT.HEARTS, RANK.QUEEN),
 ]);
 
 module.exports.deck = deck;

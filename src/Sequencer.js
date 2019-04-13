@@ -15,7 +15,7 @@ class Sequencer {
     if (!sceneClass instanceof Scene) {
       throw Error(MESSAGES.INVALID_CLASS_ERROR);
     } else {
-      const obj = { sceneClass, containerElement, options };
+      const obj = { sceneClass, containerElement, options: { ...options, sequencer: this } };
       this._scenes.push(obj);
     }
   }
