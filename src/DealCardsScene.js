@@ -42,13 +42,13 @@ class DealCardsScene extends Scene {
     
     await this.pause(500);
     
-    this.displayMsg('Just focus on 1 card for 3 seconds and I can track your gaze.')
-    await this.pause(4500);
+    this.displayMsg('Shuffling the deck.')
+    await this.pause(3000);
     
     this.clearMsg()
     await this.pause(1000);
-    this.displayMsg('Get Ready. Here come the cards!')
-    await this.pause(3000);
+    this.displayMsg('Pick a card & focus your gaze on it.')
+    await this.pause(4000);
     this._handOneView.attach(this._container);
     await this.dealFive();
     this.flipCards(this._handOneView);
@@ -104,7 +104,7 @@ class DealCardsScene extends Scene {
         targets: '.card',
         easing: 'easeOutQuint',
         left: handPosX,
-        duration: 120,
+        duration: 500,
         delay: anime.stagger(80),
       })
       .add({
@@ -115,7 +115,7 @@ class DealCardsScene extends Scene {
         translateY: screen.h / 2,
         delay: '300',
         rotate: 900,
-        duration: 1800,
+        duration: 2500,
       }).finished;
   }
 
@@ -143,7 +143,7 @@ class DealCardsScene extends Scene {
           left: function(el, i) {
             return handPosX + i * (cardWidth / 6);
           },
-          duration: 120,
+          duration: 250,
           delay: anime.stagger(80),
         },
         this.spreadCards(5),
@@ -158,7 +158,7 @@ class DealCardsScene extends Scene {
       left: function(el, i) {
         return handPosX + i * (cardWidth + padding);
       },
-      duration: 180,
+      duration: 220,
       delay: anime.stagger(70, { direction: 'reverse' }),
     };
   }

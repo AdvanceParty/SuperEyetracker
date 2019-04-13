@@ -18,18 +18,16 @@ class IntroScene extends Scene {
       const subtitle = document.createElement('h2');
       const par2 = document.createElement('p');
       const par3 = document.createElement('p');
-      const cta = document.createElement('h3');
       
       section.className = "textPage"
       intro.className = 'intro'
       
       title.innerText = 'Advanced eye tracking';
-      intro.innerText = `This is demonstration of how machine learning can be used to develop ridiculously fast and accurate eye tracking.`
-      par1.innerText = `The neural network used for this demonstration was trained on hundreds of hours of eye tracking data. This enables the software to augment traditional eye tracking technology with predictive modelling based on real user behaviour. The result is an eye tracking application which can detect a viewer's point of focus with unprecedented speed and accuracy.`;
-      subtitle.innerText = `Seeing is believing: A demonstration.`;
-      par2.innerText = `When you click the "Let's Go" button below, five playing cards will be dealt onto the screen.`
-      par3.innerText = `Quickly choose a card and focus your gaze on it for three full seconds. As soon as tbe software has determined which card you're focussing on, it will clear the screen and reveal its result.`;
-      cta.innerText = `Ready?`;
+      intro.innerText = `Ridiculously fast & accurate eye tracking with machine learning.`
+      par1.innerText = `Eye tracking software is an important tool for software testing. But current technology struggles to perform unless paired with high quality cameras and optimal lighting conditions. But with the addition of machine learning systems, we can use predictive modelling to build eye tracking applications capable of unprecedented speed and accuracy.`;
+      subtitle.innerText = `A demonstration`;
+      par2.innerText = `For the demonstration, five playing cards will be dealt out across the screen. Pick a card, any card, and the EyeML software will guess your card within three seconds... just by tracking your gaze.`
+      par3.innerText = `All set?`;
       
       const btn = document.createElement('button');
       btn.innerText = "Let's Go!";
@@ -42,7 +40,6 @@ class IntroScene extends Scene {
       section.appendChild(subtitle);
       section.appendChild(par2);
       section.appendChild(par3);
-      section.appendChild(cta);
       section.appendChild(btn);
       this._container.appendChild(section);
       resolve(true);
