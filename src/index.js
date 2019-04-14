@@ -1,11 +1,11 @@
-const Sequencer = require('./Sequencer');
-const IntroScene = require('./IntroScene');
-const DealCardsScene = require('./DealCardsScene');
-const EndScene = require('./EndScene');
+const Sequencer = require('./js/Sequencer');
+const IntroScene = require('./js/IntroScene');
+const DealCardsScene = require('./js/DealCardsScene');
+const EndScene = require('./js/EndScene');
 
 const table = document.querySelector('#table');
 const sequence = new Sequencer();
-const { deck } = require('./decks');
+const { deck } = require('./js/decks');
 
 const init = () => {
   // Add scenes to sequencer

@@ -209,7 +209,7 @@ button {
     /* back, initially hidden pane */
     .back {
       transform: rotateY(0deg);
-      background-image: url('images/cards/back.jpg');
+      background-image: url('../images/cards/back.jpg');
     }
   }
   
@@ -232,7 +232,7 @@ button {
   @each $suit in $suits {
     @each $rank in $ranks {
       &.#{$suit}-#{unquote($rank)} .front {
-        background-image: url('images/cards/#{$suit}_#{unquote($rank)}.jpg');
+        background-image: url('../images/cards/#{$suit}_#{unquote($rank)}.jpg');
       };
     }
   }
