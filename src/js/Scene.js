@@ -15,8 +15,8 @@ class Scene {
 
     this.configure(options);
 
-    this._options.sequencer.setPrevNavState(this._navState.next);
-    this._options.sequencer.setNextNavState(this._navState.prev);
+    this._options.sequencer.setPrevNavState(this._navState.prev);
+    this._options.sequencer.setNextNavState(this._navState.next);
 
     this.startBuild();
   }
@@ -55,8 +55,8 @@ class Scene {
   onBuildComplete() {
     this._navState.next.enabled = true;
     this._navState.prev.enabled = true;
-    this._options.sequencer.setPrevNavState(this._navState.next);
-    this._options.sequencer.setNextNavState(this._navState.prev);
+    this._options.sequencer.setPrevNavState(this._navState.prev);
+    this._options.sequencer.setNextNavState(this._navState.next);
   }
 
   /**

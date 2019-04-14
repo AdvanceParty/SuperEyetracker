@@ -1,6 +1,7 @@
 const anime = require('animejs/lib/anime');
 const Scene = require('./Scene');
 const HandView = require('./HandView');
+const NavItemState = require('./NavItemState');
 
 class DealCardsScene extends Scene {
   constructor(container, options) {
@@ -152,6 +153,13 @@ class DealCardsScene extends Scene {
       duration: 220,
       delay: anime.stagger(70, { direction: 'reverse' }),
     };
+  }
+
+  onBuildComplete() {
+    this._navState.next.enabled = true;
+    this._navState.prev = new NavItemState('Try Again', true);
+    this._options.sequencer.setPrevNavState(this._navState.prev);
+    this._options.sequencer.setNextNavState(this._navState.next);
   }
 }
 
