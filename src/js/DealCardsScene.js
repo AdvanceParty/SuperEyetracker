@@ -28,14 +28,6 @@ class DealCardsScene extends Scene {
     this._msgBox.classList.add('hide');
   }
 
-  onBuildComplete() {
-    const btn = document.createElement('button');
-    btn.innerText = 'Next';
-    btn.className = 'btn_continue';
-    btn.onclick = e => this.continue();
-    this._container.appendChild(btn);
-  }
-
   async build() {
     await this.pause(500);
 

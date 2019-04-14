@@ -2,12 +2,16 @@ const Sequencer = require('./js/Sequencer');
 const IntroScene = require('./js/IntroScene');
 const DealCardsScene = require('./js/DealCardsScene');
 const EndScene = require('./js/EndScene');
+const NavView = require('./js/NavView');
 
-const table = document.querySelector('#table');
-const sequence = new Sequencer();
 const { deck } = require('./js/decks');
 
-const init = () => {
+const init = deck => {
+  const table = document.querySelector('#table');
+  const navContainer = document.querySelector('#siteNav');
+  const sequence = new Sequencer();
+  const nav = new NavView(navContainer, sequence);
+
   // Add scenes to sequencer
   sequence.addScene(IntroScene, table, { deck });
   sequence.addScene(DealCardsScene, table, { handOne: deck.drawCards(5), handTwo: deck.drawCards(4) });
@@ -17,4 +21,4 @@ const init = () => {
   sequence.nextScene();
 };
 
-init();
+init(deck);

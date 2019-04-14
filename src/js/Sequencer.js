@@ -3,11 +3,27 @@ const Scene = require('./Scene');
 const MESSAGES = {
   INVALID_CLASS_ERROR: `You can only add Scene or Scene subclasses to a Sequencer`,
   NO_SCENES_ADDED_ERROR: `No scenes added to Sequencer`,
+  SCENE_NOT_AVAILABLE_ERROR: `Requested scene does not exist`,
+};
+
+const dispatchNavStatus = (navViews, navState) => {
+  return navViews.filter(view => {
+    let viewIsValid = true;
+    try {
+      view.setNextEnabled(navState.next);
+      view.setPrevEnabled(navState.prev);
+    } catch (e) {
+      viewIsValid = false;
+    }
+    return viewIsValid;
+  });
 };
 
 class Sequencer {
   constructor() {
     this._scenes = [];
+    this._navViews = [];
+    this._navState = { next: false, prev: false };
     this._setCurrentScene(null, -1);
   }
 
@@ -20,16 +36,18 @@ class Sequencer {
     }
   }
 
-  async nextScene() {
+  async goToScene(sceneNumber) {
+    // make sure at least one scene has been added
+    // and the requested scene is not out of bounds
     if (this._scenes.length == 0) {
       throw Error(MESSAGES.NO_SCENES_ADDED_ERROR);
+    } else if (sceneNumber >= this._scenes.length || sceneNumber < 0) {
+      throw Error(MESSAGES.SCENE_NOT_AVAILABLE_ERROR);
     }
 
     if (this._currentScene) {
       await this._currentScene.exit();
     }
-
-    const sceneNumber = this.getNextSceneNumber();
     const sceneData = this._scenes[sceneNumber];
     const { sceneClass, containerElement, options } = sceneData;
     const sceneInstance = new sceneClass(containerElement, options);
@@ -37,14 +55,50 @@ class Sequencer {
     this._setCurrentScene(sceneInstance, sceneNumber);
   }
 
-  getNextSceneNumber() {
+  nextScene() {
     const posPlusOne = this._sceneNumber + 1;
-    return posPlusOne < this._scenes.length ? posPlusOne : 0;
+    const nextSceneNum = posPlusOne < this._scenes.length ? posPlusOne : 0;
+    this.goToScene(nextSceneNum);
+  }
+
+  previousScene() {
+    const posMinusOne = this._sceneNumber - 1;
+    const nextSceneNum = posMinusOne >= 0 ? posMinusOne : this._scenes.length - 1;
+    this.goToScene(nextSceneNum);
+  }
+
+  registerNav(navView) {
+    this._navViews.push(navView);
   }
 
   _setCurrentScene(sceneInstance, sceneNumber) {
     this._currentScene = sceneInstance;
     this._sceneNumber = sceneNumber;
+  }
+
+  set nextEnabled(bool) {
+    const { prev } = this._navState;
+    this.setNextPrevEnabled(bool, prev);
+  }
+
+  setPrevEnabled(bool) {
+    const { next } = this._navState;
+    this.setNextPrevEnabled(next, bool);
+  }
+
+  setNextPrevEnabled(enableNext, enablePrev) {
+    const { next, prev } = this._navState;
+    if (next != enableNext || prev != enablePrev) {
+      this._navState = { next: enableNext, prev: enablePrev };
+      dispatchNavStatus(this._navViews, this._navState);
+    }
+  }
+
+  get nextEnabled() {
+    return this._navState.next;
+  }
+  get prevEnabled() {
+    return this._navState.next;
   }
 }
 

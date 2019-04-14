@@ -3,6 +3,7 @@ class Scene {
     this._container = container;
     this._options = options;
     this.configure(options);
+    this._options.sequencer.setNextPrevEnabled(false, false);
     this.startBuild();
   }
 
@@ -37,7 +38,9 @@ class Scene {
    * Override in subclasses if you need to run code after the
    * initial build() mehthod has completed.
    */
-  onBuildComplete() {}
+  onBuildComplete() {
+    this._options.sequencer.setNextPrevEnabled(true, true);
+  }
 
   /**
    * Default behaviour is just to remove all children of the
