@@ -11,7 +11,7 @@ class IntroScene extends Scene {
 
   build() {
     return new Promise((resolve, reject) => {
-      const section = document.createElement('section');
+      // const section = document.createElement('section');
       const title = document.createElement('h1');
       const intro = document.createElement('p');
       const par1 = document.createElement('p');
@@ -19,7 +19,7 @@ class IntroScene extends Scene {
       const par2 = document.createElement('p');
       const par3 = document.createElement('p');
 
-      section.className = 'textPage';
+      // section.className = 'textPage';
       intro.className = 'intro';
 
       title.innerText = 'Advanced eye tracking';
@@ -29,14 +29,14 @@ class IntroScene extends Scene {
       par2.innerText = `For the demonstration, five playing cards will be dealt out across the screen. Pick a card, any card, and the EyeML software will guess your card within three seconds... just by tracking your gaze.`;
       par3.innerText = `All set?`;
 
-      section.appendChild(title);
-      section.appendChild(intro);
-      section.appendChild(par1);
-      section.appendChild(subtitle);
-      section.appendChild(par2);
-      section.appendChild(par3);
+      this._container.appendChild(title);
+      this._container.appendChild(intro);
+      this._container.appendChild(par1);
+      this._container.appendChild(subtitle);
+      this._container.appendChild(par2);
+      this._container.appendChild(par3);
 
-      this._container.appendChild(section);
+      // this._container.appendChild(section);
       resolve(true);
     });
   }

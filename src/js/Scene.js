@@ -1,8 +1,15 @@
+const DEFAULT_CLASS_NAME = 'scene';
+
 class Scene {
-  constructor(container, options) {
-    this._container = container;
+  constructor(parent, options) {
+    this._parentElement = parent;
+    this._container = document.createElement('section');
+    this._container.className = options.className || DEFAULT_CLASS_NAME;
+    this._parentElement.appendChild(this._container);
     this._options = options;
+
     this.configure(options);
+
     this._options.sequencer.setNextPrevEnabled(false, false);
     this.startBuild();
   }
@@ -51,8 +58,8 @@ class Scene {
    */
   exit() {
     return new Promise((resolve, reject) => {
-      while (this._container.firstChild) {
-        this._container.removeChild(this._container.firstChild);
+      while (this._parentElement.firstChild) {
+        this._parentElement.removeChild(this._parentElement.firstChild);
       }
       resolve(true);
     });

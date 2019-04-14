@@ -13,19 +13,21 @@ class DealCardsScene extends Scene {
     this._handOneView = new HandView(handOne, false);
     this._handTwoView = new HandView(handTwo, false);
 
+    this._msgBoxContainer = document.createElement('div');
     this._msgBox = document.createElement('p');
-    this._msgBox.classList.add('msgBox');
-    this._container.appendChild(this._msgBox);
+    this._msgBoxContainer.classList.add('msgBox');
+    this._container.appendChild(this._msgBoxContainer);
+    this._msgBoxContainer.appendChild(this._msgBox);
     this.clearMsg();
   }
 
   displayMsg(msg) {
     this._msgBox.innerText = msg;
-    this._msgBox.classList.remove('hide');
+    this._msgBoxContainer.classList.remove('hide');
   }
 
   clearMsg() {
-    this._msgBox.classList.add('hide');
+    this._msgBoxContainer.classList.add('hide');
   }
 
   async build() {

@@ -9,7 +9,9 @@ $minWidth: 360px;
 :root {
   --card-base-width: 120px;
   --card-ratio: 1.35;
-  --table-height: calc(var(--card-base-width)*2)
+  --card-height: calc(var(--card-base-width) * var(--card-ratio));
+  --table-padding: calc(1px + var(--card-height)/1.5);
+  --table-height: calc(var(--card-height) + (var(--table-padding) * 2));
 }
 
 /*

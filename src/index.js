@@ -7,18 +7,29 @@ const NavView = require('./js/NavView');
 const { deck } = require('./js/decks');
 
 const init = deck => {
-  const table = document.querySelector('#table');
+  const parentElement = document.querySelector('main');
   const navContainer = document.querySelector('#siteNav');
   const sequence = new Sequencer();
   const nav = new NavView(navContainer, sequence);
 
   // Add scenes to sequencer
-  sequence.addScene(IntroScene, table, { deck });
-  sequence.addScene(DealCardsScene, table, { handOne: deck.drawCards(5), handTwo: deck.drawCards(4) });
-  sequence.addScene(EndScene, table, {});
-  // sequence.addScene(DealCardsScene, table, { cards: deck.drawCards(4) });
+  sequence.addScene(IntroScene, parentElement, {
+    className: 'textPage',
+    deck,
+  });
 
-  sequence.nextScene();
+  sequence.addScene(DealCardsScene, parentElement, {
+    className: 'cardTable',
+    handOne: deck.drawCards(5),
+    handTwo: deck.drawCards(4),
+  });
+
+  sequence.addScene(EndScene, parentElement, {
+    className: 'textPage',
+  });
+
+  return sequence;
 };
 
-init(deck);
+const sequence = init(deck);
+sequence.nextScene();
