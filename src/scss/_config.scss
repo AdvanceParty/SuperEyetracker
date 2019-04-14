@@ -27,14 +27,21 @@ html { box-sizing: border-box; }
   }
 }
 
-@media all and (min-width: 501px) and (max-width: 750px) {
-  :root {
-    --card-base-width: 85px;
-  }
+@media all and (min-width: 501px) and (max-width: 600px) {
+:root { --card-base-width: 85px; }
 }
 
-@media all and (min-width: 900px) {
-  :root {
-    --card-base-width: 160px;
-  }
+@media all and (min-width: 601px) and (max-width: 750px) {
+:root { --card-base-width: 110px; }
+}
+@media all and (min-width: 751px) and (max-width: 900px) {
+:root { --card-base-width: 140px; }
+}
+
+@media all and (min-width: 901px) and (max-width: 999px) {
+  :root { --card-base-width: 170px; }
+}
+
+@media all and (min-width: 1000px) {
+  :root { --card-base-width: 195px; }
 }

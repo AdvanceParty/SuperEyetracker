@@ -10,7 +10,7 @@ class IntroScene extends Scene {
   }
 
   build() {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       // const section = document.createElement('section');
       const title = document.createElement('h1');
       const intro = document.createElement('p');
@@ -42,7 +42,10 @@ class IntroScene extends Scene {
   }
 
   onBuildComplete() {
-    this._options.sequencer.setNextPrevEnabled(true, false);
+    this._navState.next.enabled = true;
+    this._navState.prev.enabled = false;
+    this._options.sequencer.setNextNavState(this._navState.next);
+    this._options.sequencer.setPrevNavState(this._navState.prev);
   }
 }
 

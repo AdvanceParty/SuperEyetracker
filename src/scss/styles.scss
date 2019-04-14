@@ -5,10 +5,11 @@
 @import 'nav';
 
 body {
+  margin:0;
+  
   min-height: 100vh;
   width: 100%;
   min-width: 360px;
-  margin:0;
   
   font-family: 'EB Garamond', serif;
   color: $textCol;
@@ -22,7 +23,6 @@ body {
     "sceneNav"
     "siteFooter";
   grid-template-rows: 1fr auto 2em;
-
 }
 
 main {
@@ -162,7 +162,7 @@ footer {
     /* back, initially hidden pane */
     .back {
       transform: rotateY(0deg);
-      background-image: url('../images/cards/back.jpg');
+      background-image: inline('../images/cards/back.jpg');
     }
   }
   
@@ -179,7 +179,7 @@ footer {
   @each $suit in $suits {
     @each $rank in $ranks {
       &.#{$suit}-#{unquote($rank)} .front {
-        background-image: url('../images/cards/#{$suit}_#{unquote($rank)}.jpg');
+        background-image: inline('../images/cards/#{$suit}_#{unquote($rank)}.jpg');
       };
     }
   }

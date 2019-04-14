@@ -1,4 +1,5 @@
 const Scene = require('./Scene');
+const NavItemState = require('./NavItemState');
 
 const MESSAGES = {
   INVALID_CLASS_ERROR: `You can only add Scene or Scene subclasses to a Sequencer`,
@@ -10,8 +11,8 @@ const dispatchNavStatus = (navViews, navState) => {
   return navViews.filter(view => {
     let viewIsValid = true;
     try {
-      view.setNextEnabled(navState.next);
-      view.setPrevEnabled(navState.prev);
+      const { next, prev } = navState;
+      view.updateNavState(next, prev);
     } catch (e) {
       viewIsValid = false;
     }
@@ -23,7 +24,10 @@ class Sequencer {
   constructor() {
     this._scenes = [];
     this._navViews = [];
-    this._navState = { next: false, prev: false };
+    this._navState = {
+      next: new NavItemState('Next', false),
+      prev: new NavItemState('Back', false),
+    };
     this._setCurrentScene(null, -1);
   }
 
@@ -76,23 +80,34 @@ class Sequencer {
     this._sceneNumber = sceneNumber;
   }
 
-  set nextEnabled(bool) {
-    const { prev } = this._navState;
-    this.setNextPrevEnabled(bool, prev);
-  }
-
-  setPrevEnabled(bool) {
+  setNextNavState(navItemState) {
     const { next } = this._navState;
-    this.setNextPrevEnabled(next, bool);
-  }
-
-  setNextPrevEnabled(enableNext, enablePrev) {
-    const { next, prev } = this._navState;
-    if (next != enableNext || prev != enablePrev) {
-      this._navState = { next: enableNext, prev: enablePrev };
+    if (NavItemState.AreDifferent(navItemState, next)) {
+      this._navState.next = navItemState.clone();
       dispatchNavStatus(this._navViews, this._navState);
     }
   }
+
+  setPrevNavState(navItemState) {
+    const { prev } = this._navState;
+    if (NavItemState.AreDifferent(navItemState, prev)) {
+      this._navState.prev = navItemState.clone();
+      dispatchNavStatus(this._navViews, this._navState);
+    }
+  }
+
+  // setPrevEnabled(bool) {
+  //   const { next } = this._navState;
+  //   this.setNextPrevEnabled(next, bool);
+  // }
+
+  // setNextPrevEnabled(enableNext, enablePrev) {
+  //   const { next, prev } = this._navState;
+  //   if (next != enableNext || prev != enablePrev) {
+  //     this._navState = { next: enableNext, prev: enablePrev };
+  //     dispatchNavStatus(this._navViews, this._navState);
+  //   }
+  // }
 
   get nextEnabled() {
     return this._navState.next;

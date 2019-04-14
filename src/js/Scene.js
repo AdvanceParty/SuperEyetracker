@@ -1,7 +1,12 @@
+const NavItemState = require('./NavItemState');
 const DEFAULT_CLASS_NAME = 'scene';
 
 class Scene {
   constructor(parent, options) {
+    this._navState = {
+      next: new NavItemState('Next', false),
+      prev: new NavItemState('Back', false),
+    };
     this._parentElement = parent;
     this._container = document.createElement('section');
     this._container.className = options.className || DEFAULT_CLASS_NAME;
@@ -10,7 +15,9 @@ class Scene {
 
     this.configure(options);
 
-    this._options.sequencer.setNextPrevEnabled(false, false);
+    this._options.sequencer.setPrevNavState(this._navState.next);
+    this._options.sequencer.setNextNavState(this._navState.prev);
+
     this.startBuild();
   }
 
@@ -46,7 +53,10 @@ class Scene {
    * initial build() mehthod has completed.
    */
   onBuildComplete() {
-    this._options.sequencer.setNextPrevEnabled(true, true);
+    this._navState.next.enabled = true;
+    this._navState.prev.enabled = true;
+    this._options.sequencer.setPrevNavState(this._navState.next);
+    this._options.sequencer.setNextNavState(this._navState.prev);
   }
 
   /**
