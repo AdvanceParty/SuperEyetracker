@@ -31,7 +31,7 @@ class DealCardsScene extends Scene {
   }
 
   async build() {
-    await this.pause(500);
+    await this.pause(1000);
 
     this.displayMsg('Shuffling the deck.');
     await this.pause(3000);
@@ -39,12 +39,12 @@ class DealCardsScene extends Scene {
     this.clearMsg();
     await this.pause(1000);
     this.displayMsg('Pick a card & focus your gaze on it.');
-    await this.pause(4000);
+    await this.pause(1000);
     this._handOneView.attach(this._container);
     await this.dealFive();
-    await this.pause(1000);
+    await this.pause(3500);
     this.flipCards(this._handOneView);
-    await this.pause(3000);
+    await this.pause(3500);
 
     this.flipCards(this._handOneView);
     this.clearMsg();
@@ -134,7 +134,7 @@ class DealCardsScene extends Scene {
           left: function(el, i) {
             return handPosX + i * (cardWidth / 6);
           },
-          duration: 250,
+          duration: 500,
           delay: anime.stagger(80),
         },
         this.spreadCards(5),
