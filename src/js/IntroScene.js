@@ -11,7 +11,6 @@ class IntroScene extends Scene {
 
   build() {
     return new Promise(resolve => {
-      // const section = document.createElement('section');
       const title = document.createElement('h1');
       const intro = document.createElement('p');
       const par1 = document.createElement('p');
@@ -19,7 +18,6 @@ class IntroScene extends Scene {
       const par2 = document.createElement('p');
       const par3 = document.createElement('p');
 
-      // section.className = 'textPage';
       intro.className = 'intro';
 
       title.innerText = 'Advanced eye tracking';
@@ -36,7 +34,6 @@ class IntroScene extends Scene {
       this._container.appendChild(par2);
       this._container.appendChild(par3);
 
-      // this._container.appendChild(section);
       resolve(true);
     });
   }
@@ -44,8 +41,7 @@ class IntroScene extends Scene {
   onBuildComplete() {
     this._navState.next.enabled = true;
     this._navState.prev.enabled = false;
-    this._options.sequencer.setNextNavState(this._navState.next);
-    this._options.sequencer.setPrevNavState(this._navState.prev);
+    this._options.sequencer.setNavState(this._navState);
   }
 }
 

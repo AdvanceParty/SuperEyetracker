@@ -5,7 +5,8 @@ class EndScene extends Scene {
   constructor(container, options) {
     super(container, options);
     this._navState.prev = new NavItemState('Try Again', false);
-    this._options.sequencer.setNextNavState(this._navState.prev);
+    this._navState.next = new NavItemState('Fin ', false);
+    this._options.sequencer.setNavState(this._navState);
   }
 
   build() {
@@ -16,14 +17,13 @@ class EndScene extends Scene {
       const subtitle = document.createElement('h2');
       const par2 = document.createElement('p');
       const par3 = document.createElement('p');
-      // const cta = document.createElement('h3');
 
       intro.className = 'intro';
 
       title.innerText = 'Pretty slick, hey?';
       intro.innerText = `Unfortunately, it's all bullshit.`;
-      par1.innerText = `There's no neural network here. No AI or machine learning, just some sleight of hand and good old-fashioned misdirection.`;
-      subtitle.innerText = `Well, that's a mean trick.`;
+      par1.innerText = `There's no neural network here. No AI or machine learning, just some sleight of hand and good old-fashioned misdirection. You'll find versions of this particular trick all over the internet once you know what you're looking for. Run the trrick a couple more times and you should be able to figure out what's going on.`;
+      subtitle.innerText = `So it's just a con?`;
       par2.innerText = `Sorry about that. But welcome to the unreal world!`;
       par3.innerText = `The internet is filled with unrealiable narrators, hyperbolic claims and a billion dubious versions of 'truth'. We are already living in the unreal world. For all the wonders and conveniences that it offers, we should move through it with a healthy degree of skepticism.`;
 
@@ -33,17 +33,15 @@ class EndScene extends Scene {
       this._container.appendChild(subtitle);
       this._container.appendChild(par2);
       this._container.appendChild(par3);
-      // this._container.appendChild(cta);
 
       resolve(true);
     });
   }
 
   onBuildComplete() {
-    this._navState.next.enabled = true;
+    this._navState.next.enabled = false;
     this._navState.prev.enabled = true;
-    this._options.sequencer.setPrevNavState(this._navState.next);
-    this._options.sequencer.setNextNavState(this._navState.prev);
+    this._options.sequencer.setNavState(this._navState);
   }
 
   continue() {

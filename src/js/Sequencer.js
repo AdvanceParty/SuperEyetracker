@@ -93,6 +93,21 @@ class Sequencer {
     if (NavItemState.AreDifferent(navItemState, prev)) {
       this._navState.prev = navItemState.clone();
       dispatchNavStatus(this._navViews, this._navState);
+      dispatchNavStatus(this._navViews, this._navState);
+    }
+  }
+
+  setNavState(newState) {
+    const { next, prev } = this._navState;
+    const newNext = newState.next;
+    const newPrev = newState.prev;
+
+    const isNextDiff = NavItemState.AreDifferent(next, newNext);
+    const isPrevDiff = NavItemState.AreDifferent(prev, newPrev);
+
+    if (isNextDiff || isPrevDiff) {
+      this._navState = { next: newNext.clone(), prev: newPrev.clone() };
+      dispatchNavStatus(this._navViews, this._navState);
     }
   }
 

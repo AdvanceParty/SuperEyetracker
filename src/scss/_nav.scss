@@ -1,14 +1,18 @@
 /* Nav */
+$radius: 15px;
+
 nav button {
   font-size: 1.1rem;
-  width: 7em;
+  width: 9em;
   height: 3em;
   margin-top:10px;
   &.prev {
-    border-radius: 8px 0 0px 8px;
+    border-radius: $radius 0 0px $radius;
+    margin-right: .5em;
   }
   &.next {
-    border-radius: 0 8px 8px 0;
+    border-radius: 0 $radius $radius 0;
+    margin-left: .5em;
   }
   &:hover:enabled { 
     box-shadow: 3px 2px 8px rgba(0,0,0,.2);
